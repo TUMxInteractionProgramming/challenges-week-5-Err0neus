@@ -54,8 +54,8 @@ function switchChannel(channelObject) {
 function star() {
     // Toggling star
     // #7 replace image with icon
-    $('#chat h1 i').toggleClass('fas');
-    $('#chat h1 i').toggleClass('far');
+    $('#chat h1 i').toggleClass('primary fas');
+    $('#chat h1 i').toggleClass('primary far');
 
     // #7 toggle star also in data model
     currentChannel.starred = !currentChannel.starred;
@@ -140,7 +140,7 @@ function createMessageElement(messageObject) {
         messageObject.createdOn.toLocaleString() +
         '<em>' + expiresIn+ ' min. left</em></h3>' +
         '<p>' + messageObject.text + '</p>' +
-        '<button>+5 min.</button>' +
+        '<button class="accent">+5 min.</button>' +
         '</div>';
 }
 
