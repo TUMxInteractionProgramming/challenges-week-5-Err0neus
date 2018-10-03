@@ -25,10 +25,13 @@
     <!-- embed external JavaScript file for app interaction -->
     <script src="js/script.js"></script>
 
+    <!-- #10 #embedding emojis-->
+    <script src="js/emojis-list.js" type="text/javascript" charset="utf-8"></script>
+
 </head>
 
 <!-- #8 #channel #onload all channels when the body has loaded -->
-<body onload="listChannels()">
+<body onload="listChannels(compareNew)">
 
 <!-- channel area -->
 <div id="channels" class="md-whiteframe-16dp">
@@ -93,21 +96,21 @@
     </ul>
 
     <!-- #flt FAB-->
-    <button class="accent md-whiteframe-4dp" id="flt"><i class="fas fa-plus"></i></button>
+    <button class="accent md-whiteframe-4dp" id="flt" onclick="addChannel()"><i class="fas fa-plus"></i></button>
 
     <!-- TAB BAR -->
     <div id="tab-bar" class="md-whiteframe-4dp" >
-        <button class="selected" id="tab-new" onclick="selectTab('#tab-new')">
+        <button class="selected" id="tab-new" onclick="selectTab('#tab-new'); listChannels(compareNew)">
             <!-- #7  replacing icons -->
             <i class="far fa-lightbulb"></i>
             New
         </button>
-        <button id="tab-trending" onclick="selectTab('#tab-trending')">
+        <button id="tab-trending" onclick="selectTab('#tab-trending'); listChannels(compareTrending)">
             <!-- #7  replacing icons -->
             <i class="fas fa-fire"></i>
             Trending
         </button>
-        <button id="tab-favorites" onclick="selectTab('#tab-favorites')">
+        <button id="tab-favorites" onclick="selectTab('#tab-favorites'); listChannels(compareStarred)">
             <!-- #7  replacing icons -->
             <i class="fas fa-star"></i>
             Favorites
@@ -126,7 +129,7 @@
     </h1>
 
     <div id="messages">
-
+<!-- #10 #delete - comenting out static messages
         <div class="message own">
             <h3><a href="http://w3w.co/cheeses.yard.applies" target="_blank"><strong>cheeses.yard.applies</strong></a>
                 Wed, June 20th, 13:37 <em>15 min. left</em></h3>
@@ -172,6 +175,7 @@
             <button class="accent">+5 min.</button>
         </div>
 
+    -->
     </div>
 
     <!-- ChAT BAR -->

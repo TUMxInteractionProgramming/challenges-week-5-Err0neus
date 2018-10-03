@@ -6,7 +6,7 @@ console.log("App is alive");
 var currentChannel;
 
 /** #7 We simply initialize it with the channel selected by default - sevencontinents */
-currentChannel = sevencontinents;
+currentChannel = channels[2];
 
 /** Store my current (sender) location
  */
@@ -80,7 +80,17 @@ function selectTab(tabId) {
  */
 function toggleEmojis() {
     $('#emojis').toggle(); // #toggle
+    loadEmojis(); // load emojis onclick
 }
+
+
+//* #10 more #suitable way to load emojis, can be used in body onload
+function loadEmojis() {
+    var emojis = require('emojis-list');
+    $('#emojis').html(emojis);
+}
+
+
 
 /**
  * #8 This #constructor function creates a new chat #message.
@@ -108,17 +118,24 @@ function sendMessage() {
     // #8 let's now use the real message #input
     var message = new Message($('#message').val());
     console.log("New message:", message);
-
+    
+    // #10 #empty message is not sent... using 'if' statement
+    if (message.text.length > 0) {
     // #8 convenient message append with jQuery:
     $('#messages').append(createMessageElement(message));
+   // #10 #push the message into the channel array
+   currentChannel.messages.push(createMessageElement(message));
+   currentChannel.messageCount = currentChannel.messageCount + 1;
 
+}
     // #8 messages will scroll to a certain point if we apply a certain height, in this case the overall scrollHeight of the messages-div that increases with every message;
     // it would also scroll to the bottom when using a very high number (e.g. 1000000000);
     $('#messages').scrollTop($('#messages').prop('scrollHeight'));
 
     // #8 clear the message input
     $('#message').val('');
-}
+
+ }
 
 /**
  * #8 This function makes an html #element out of message objects' #properties.
@@ -145,18 +162,35 @@ function createMessageElement(messageObject) {
 }
 
 
-function listChannels() {
+function listChannels(sortOption) {
     // #8 channel onload
     //$('#channels ul').append("<li>New Channel</li>")
 
-    // #8 five new channels
-    $('#channels ul').append(createChannelElement(yummy));
-    $('#channels ul').append(createChannelElement(sevencontinents));
-    $('#channels ul').append(createChannelElement(killerapp));
-    $('#channels ul').append(createChannelElement(firstpersononmars));
-    $('#channels ul').append(createChannelElement(octoberfest));
+    // #10 don't #duplicacte
+    $('#channels ul').empty();
+    // #10 using #for loop
+    var i
+    for (i = 0; i < channels.length; i++) {
+        // #10 #sorting channels 
+        channels.sort(sortOption);
+        $('#channels ul').append(createChannelElement(channels[i]));
+    } 
+
 }
 
+//** #10 #compare functions */
+
+function compareNew(a, b) {
+    return (b.createdOn - a.createdOn)
+}
+
+function compareTrending(a, b) {
+    return (b.messageCount - a.messageCount) 
+}
+
+function compareStarred(a, b) {
+    return (b.starred - a.starred)
+}
 /**
  * #8 This function makes a new jQuery #channel <li> element out of a given object
  * @param channelObject a channel object
@@ -193,3 +227,12 @@ function createChannelElement(channelObject) {
     // return the complete channel
     return channel;
 }
+
+
+// #10 FAB actions
+
+function addChannel() {
+    $('#messages').empty();
+}
+// #clear
+
