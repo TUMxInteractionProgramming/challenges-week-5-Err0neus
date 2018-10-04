@@ -41,3 +41,4 @@ var channels = [ {
     messageCount: 321,
     messages: [], /* #10 #chl messages property initialized as an empty array */
 },];
+
