@@ -212,7 +212,30 @@ button.accent {
     flex-grow: 1;
 }
 
+/* #10 new channel input bar*/
+#new-channel-input-bar {
 
+    display: none;
+    padding: none;
+}
+#new-channel-input-bar button {
+    position: absolute;
+    right:0px;
+    bottom: 4px;
+    text-transform: none;
+    flex-grow: 1;
+}
+
+#new-channel-input-bar input{
+
+    font-size: 16px;
+    border: none;
+    flex-grow: 1;
+    padding: 12px 0px 12px 0px;
+    border-radius: 2px;
+    margin-right: calc(15% - 20px)
+
+}
 
 #tab-bar button.selected {
     color: #3F51B5;
@@ -373,6 +396,13 @@ button.accent {
     position: absolute;
     right: 16px;
     bottom: 90px;
+}
+
+
+/* #10 create button default */
+
+#create-button {
+    display:none;
 }
 /* pretty, pretty shadows #shdw from SCOTT ROA @stackoverflow*/
 

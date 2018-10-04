@@ -48,6 +48,9 @@ function switchChannel(channelObject) {
 
     /* #7 store selected channel in global variable */
     currentChannel = channelObject;
+
+    /* #10 switchng the channel also aborts the 'creation mode' */
+    abort();
 }
 
 /* liking a channel on #click */
@@ -127,6 +130,7 @@ function sendMessage() {
    currentChannel.messages.push(createMessageElement(message));
    currentChannel.messageCount = currentChannel.messageCount + 1;
 
+
 }
     // #8 messages will scroll to a certain point if we apply a certain height, in this case the overall scrollHeight of the messages-div that increases with every message;
     // it would also scroll to the bottom when using a very high number (e.g. 1000000000);
@@ -161,6 +165,7 @@ function createMessageElement(messageObject) {
         '</div>';
 }
 
+var currentSortOption = compareNew
 
 function listChannels(sortOption) {
     // #8 channel onload
@@ -175,6 +180,7 @@ function listChannels(sortOption) {
         channels.sort(sortOption);
         $('#channels ul').append(createChannelElement(channels[i]));
     } 
+    currentSortOption = sortOption
 
 }
 
@@ -231,8 +237,85 @@ function createChannelElement(channelObject) {
 
 // #10 FAB actions
 
+
 function addChannel() {
+
+    // #clear all messages
     $('#messages').empty();
+
+    // change send button
+    $('#send-button').css('display','none');
+    $('#create-button').css('display','block');
+    
+    // switch the top right app bar
+    $('#new-channel-input-bar').css('display','flex');
+    $('#default-right-app-bar').css('display','none');
+
 }
-// #clear
+
+function abort() {
+
+    // change back the send button
+    $('#send-button').css('display','block');
+    $('#create-button').css('display','none');
+
+    // switch back the top right app bar
+    $('#new-channel-input-bar').css('display','none');
+    $('#default-right-app-bar').css('display','flex');
+
+}
+
+function createChannel() {
+    // build the channel object
+    var channel = new Channel($('#new-channel-input').val())
+    // build the message object
+    var message = new Message($('#message').val());
+
+    // if the new channel name input is ok
+    if (checkValidName(channel.name) == false) {
+        // and the message is not empty
+        if (checkValidMessage(message.text) == false) {
+            console.log('hello samaritan');
+            // make the channel the current one
+            currentChannel = channel;
+            // add the channel to the channels array
+            channels.push(channel);
+            // send the message
+            sendMessage();
+            // reset the app bars and buttons
+            abort();
+            // refresh the channel list with the last selected sort option
+            listChannels(currentSortOption);
+            // refrest the top-right-app bar with the new channel
+            switchChannel(currentChannel);
+
+
+
+
+        }
+    }
+}
+
+// check if the input is #valid, returns TRUE if it's either empty, does not start with # or contains a space
+
+function checkValidName(text) {
+    return (text.length == 0) || (text[0] != '#') || (text.indexOf(' ') >= 0 )
+    };
+
+
+// check message is #valid, returns TRUE if it's empty
+function checkValidMessage(message) {
+    return (message.length == 0)
+}
+
+// #10 constructor function for a channel
+function Channel(text) {
+    this.name = text;
+    this.createdOn = new Date(); //now
+    this.createdBy = currentLocation.what3words;
+    this.starred = false;
+    this.expiresIn = 100; //arbitrary number for now
+    this.messageCount = 0;
+    this.messages = [];
+};
 

@@ -121,12 +121,19 @@
 <div id="chat">
 
     <!-- APP BAR for CHANNEL TITLE -->
-    <h1 class="md-whiteframe-4dp">
+    <h1 id="default-right-app-bar" class="md-whiteframe-4dp">
         <span id="channel-name">#SevenContinents</span>
         <small id="channel-location">by <strong>cheeses.yard.applies</strong></small>
         <!-- #7 star is now font-awesome -->
         <i class="primary fas fa-star" onclick="star()"></i>
     </h1>
+
+    <!-- #10 APP BAR input -->
+    <h1 id="new-channel-input-bar" class="md-whiteframe-4dp">
+        <input type="text" placeholder="Enter a #ChannelName" maxlength="140" id="new-channel-input">
+        <button class="primary" onclick="abort()"><b>x</b> ABORT</button>
+    </h1>
+
 
     <div id="messages">
 <!-- #10 #delete - comenting out static messages
@@ -189,7 +196,8 @@
                It also gets an id -->
         <input type="text" placeholder="Message..." maxlength="140" id="message">
         <!-- #8 send message requires a button -->
-        <button class="accent" onclick="sendMessage()"><i class="fas fa-arrow-right"></i></button>
+        <button id="send-button" class="accent" onclick="sendMessage()"><i class="fas fa-arrow-right"></i></button>
+        <button id="create-button" class="accent" onclick="createChannel()">CREATE</button>
 
     </div>
 </div>
